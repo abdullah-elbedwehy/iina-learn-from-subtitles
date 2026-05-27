@@ -1,0 +1,20 @@
+{
+  "name": "Subtitle Lookup",
+  "identifier": "com.abdullahh.subtitle-lookup",
+  "version": "1.2.0",
+  "description": "Look up English subtitle vocabulary via AI",
+  "author": {
+    "name": "Abdullah"
+  },
+  "entry": "dist/index.js",
+  "permissions": ["show-osd"],
+  "preferencesPage": "pref.html",
+  "preferenceDefaults": {
+    "provider": "google_ai",
+    "shortcut": "Shift+T",
+    "pause": "true",
+    "include_title": "true",
+    "context_lines": "5",
+    "prompt": ""
+  }
+}

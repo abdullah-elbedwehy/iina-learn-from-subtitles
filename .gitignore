@@ -1,0 +1,7 @@
+node_modules/
+.parcel-cache/
+.claude/
+*.log
+.DS_Store
+.vscode/
+.idea/

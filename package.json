@@ -1,0 +1,29 @@
+{
+  "name": "iina-learn-from-subtitles",
+  "version": "2.0.0",
+  "description": "IINA plugin that pops a vocabulary lookup for the current English subtitle line — pick your AI provider, customize the prompt, learn while you watch.",
+  "license": "MIT",
+  "author": "Abdullah Elbedwehy",
+  "scripts": {
+    "build": "rm -rf dist .parcel-cache && parcel build .",
+    "watch": "parcel watch .",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "iina-plugin-definition": "^0.99.0",
+    "parcel": "^2.12.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "entry": "dist/index.js",
+  "targets": {
+    "main": false,
+    "entry": {
+      "distDir": "./dist/",
+      "source": "src/index.ts",
+      "isLibrary": false
+    }
+  },
+  "browserslist": "safari >= 13"
+}

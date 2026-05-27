@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["es6", "es7", "esnext"],
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "types": [],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/iina-plugin-definition"
+    ]
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "./node_modules/iina-plugin-definition/iina/**/*.d.ts"
+  ],
+  "compileOnSave": false
+}

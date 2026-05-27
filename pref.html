@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Subtitle Lookup Settings</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { margin: 0; padding: 0; color-scheme: light dark; }
+    body {
+      padding: 16px;
+      margin: 0;
+      font-size: 13px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      color: CanvasText;
+      background: Canvas;
+    }
+    p { margin: 0; }
+    .secondary { color: GrayText; font-size: 11px; }
+    .pref-section { margin-bottom: 20px; }
+    .pref-label { font-weight: 600; margin-bottom: 6px; }
+    .radio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px 16px;
+      margin-top: 4px;
+    }
+    .radio-grid label { line-height: 24px; }
+    .check-row { line-height: 26px; }
+    .check-row label { display: block; }
+    input[type="text"], input[type="number"] {
+      font-size: 13px;
+      font-family: inherit;
+      padding: 5px 8px;
+      color: CanvasText;
+      background: Canvas;
+      border: 1px solid GrayText;
+      border-radius: 4px;
+    }
+    input[type="text"] {
+      width: 100%;
+      margin-top: 4px;
+      cursor: pointer;
+      caret-color: transparent;
+    }
+    input[type="text"]:focus {
+      outline: 2px solid Highlight;
+      outline-offset: 1px;
+    }
+    input[type="text"].capturing {
+      border-color: Highlight;
+      opacity: 0.7;
+    }
+    input[type="number"] {
+      width: 70px;
+    }
+    textarea {
+      width: 100%;
+      margin-top: 4px;
+      font-size: 12px;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      line-height: 1.5;
+      resize: vertical;
+      padding: 8px;
+      color: CanvasText;
+      background: Canvas;
+      border: 1px solid GrayText;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 6px;
+      font-size: 11px;
+      padding: 3px 8px;
+      cursor: pointer;
+    }
+    .reset-all-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+    }
+    .reset-all-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+      cursor: pointer;
+      color: #cc3333;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid GrayText;
+      opacity: 0.3;
+      margin: 0 0 20px 0;
+    }
+    .template-help {
+      padding: 10px 12px;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      border: 1px solid GrayText;
+      border-radius: 6px;
+      background: color-mix(in srgb, Canvas 92%, CanvasText 8%);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .template-help p { margin-bottom: 6px; }
+    .template-help ul { margin: 0; padding-left: 0; list-style: none; }
+    .template-help li { margin: 2px 0; }
+    .var {
+      color: #e85d75;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: color-mix(in srgb, #e85d75 12%, transparent);
+    }
+    @media (prefers-color-scheme: dark) {
+      .var { color: #ff8fa3; background: color-mix(in srgb, #ff8fa3 14%, transparent); }
+    }
+    .field-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reset-all-row">
+    <button class="reset-all-btn" onclick="resetAll()">Reset all to defaults</button>
+  </div>
+
+  <div class="pref-section">
+    <div class="pref-label">AI Provider</div>
+    <div class="radio-grid">
+      <label><input type="radio" name="provider" value="google_ai"  data-pref-key /> Google AI Mode <span style="color:GrayText;font-size:10px">(fastest)</span></label>
+      <label><input type="radio" name="provider" value="perplexity" data-pref-key /> Perplexity</label>
+      <label><input type="radio" name="provider" value="claude"     data-pref-key /> Claude</label>
+      <label><input type="radio" name="provider" value="chatgpt"    data-pref-key /> ChatGPT</label>
+      <label><input type="radio" name="provider" value="grok"       data-pref-key /> Grok</label>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="pref-section">
+    <div class="pref-label">Keyboard Shortcut</div>
+    <p class="secondary">Click the field, then press your key combination. Takes effect after IINA reloads the plugin.</p>
+    <input type="text" id="shortcut-input" data-pref-key="shortcut"
+           placeholder="Click here and press a key combo…" />
+  </div>
+
+  <hr />
+
+  <div class="pref-section">
+    <div class="pref-label">Behavior</div>
+    <div class="check-row">
+      <label>
+        <input type="checkbox" data-type="bool" data-pref-key="pause" />
+        Pause video when looking up a word
+      </label>
+      <label>
+        <input type="checkbox" data-type="bool" data-pref-key="include_title" />
+        Include episode name in query
+      </label>
+    </div>
+    <div class="field-row">
+      <label for="context-lines-input">Recent subtitle lines for context:</label>
+      <input type="number" id="context-lines-input" data-pref-key="context_lines" min="0" max="20" />
+    </div>
+    <p class="secondary" style="margin-top:4px">How many previous subtitle lines to feed the AI as scene context. 0 = none.</p>
+  </div>
+
+  <hr />
+
+  <div class="pref-section">
+    <div class="pref-label">System Prompt</div>
+
+    <div class="template-help">
+      <p><strong>How to edit:</strong> The text below is sent to the AI. You can rewrite any part of it. Words in <span class="var">{{double braces}}</span> are placeholders — they get replaced with live data when you trigger a lookup.</p>
+      <p style="margin-top:8px"><strong>Available placeholders:</strong></p>
+      <ul>
+        <li><span class="var">{{subtitle}}</span> — the current subtitle line</li>
+        <li><span class="var">{{title}}</span> — movie or episode title</li>
+        <li><span class="var">{{filename}}</span> — source file name</li>
+        <li><span class="var">{{time}}</span> — current playback time</li>
+        <li><span class="var">{{duration}}</span> — total length</li>
+        <li><span class="var">{{recent_subtitles}}</span> — last N subtitle lines (set above)</li>
+      </ul>
+    </div>
+
+    <textarea id="prompt-input" data-pref-key="prompt" rows="14" spellcheck="false" autocorrect="off"></textarea>
+    <button onclick="resetPrompt()">Reset prompt to default</button>
+  </div>
+
+  <script>
+    var DEFAULT_PROMPT =
+      "You are an English vocabulary helper for a non-native English speaker learning through movies. " +
+      "Reply in exactly this format with no extra text, no greeting, no explanation:\n\n" +
+      "Original: \"{{subtitle}}\"\n\n" +
+      "Simplified: [rewrite the original line using easy everyday English so a beginner understands it the same way a native speaker would. Keep the same meaning and tone.]\n\n" +
+      "Hard words:\n" +
+      "- [word or phrase from the original]: [2-3 simple synonyms separated by commas]\n" +
+      "- [word or phrase from the original]: [2-3 simple synonyms separated by commas]\n\n" +
+      "Rules:\n" +
+      "- Pick only words a non-native English speaker would struggle with. If the line is easy, list 1 word. Never list more than 4.\n" +
+      "- Synonyms must be simpler than the original word.\n" +
+      "- Use the recent scene context below ONLY to disambiguate meaning. Do not mention it in your reply.\n\n" +
+      "Recent scene context:\n{{recent_subtitles}}\n\n" +
+      "Episode: {{title}}";
+
+    var DEFAULTS = {
+      provider:      "google_ai",
+      shortcut:      "Shift+T",
+      pause:         true,
+      include_title: true,
+      context_lines: 5,
+      prompt:        DEFAULT_PROMPT
+    };
+
+    var shortcutInput = document.getElementById("shortcut-input");
+    var promptInput   = document.getElementById("prompt-input");
+
+    // Pre-fill prompt on load if empty (first install).
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        if (!promptInput.value || promptInput.value.trim() === "") {
+          promptInput.value = DEFAULT_PROMPT;
+          promptInput.dispatchEvent(new Event("input",  { bubbles: true }));
+          promptInput.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      }, 50);
+    });
+
+    shortcutInput.addEventListener("focus", function () {
+      this.classList.add("capturing");
+      this.placeholder = "Press a key combination…";
+    });
+
+    shortcutInput.addEventListener("blur", function () {
+      this.classList.remove("capturing");
+      this.placeholder = "Click here and press a key combo…";
+    });
+
+    shortcutInput.addEventListener("keydown", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var parts = [];
+      if (e.metaKey)  parts.push("Meta");
+      if (e.ctrlKey)  parts.push("Ctrl");
+      if (e.altKey)   parts.push("Alt");
+      if (e.shiftKey) parts.push("Shift");
+
+      var skip = ["Meta", "Control", "Alt", "Shift", "Tab", "Escape"];
+      if (!skip.includes(e.key)) {
+        var key = e.key.length === 1 ? e.key.toUpperCase() : e.key;
+        parts.push(key);
+      }
+
+      if (parts.length >= 2 || (parts.length === 1 && !["Meta","Ctrl","Alt","Shift"].includes(parts[0]))) {
+        this.value = parts.join("+");
+        this.dispatchEvent(new Event("input",  { bubbles: true }));
+        this.dispatchEvent(new Event("change", { bubbles: true }));
+        this.blur();
+      }
+    });
+
+    shortcutInput.addEventListener("keyup",    function (e) { e.preventDefault(); });
+    shortcutInput.addEventListener("keypress", function (e) { e.preventDefault(); });
+
+    function setAndNotify(el, value) {
+      if (el.type === "radio") {
+        el.checked = true;
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+      } else if (el.type === "checkbox") {
+        el.checked = value;
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+      } else {
+        el.value = value;
+        el.dispatchEvent(new Event("input",  { bubbles: true }));
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    }
+
+    function resetAll() {
+      var providerRadio = document.querySelector(
+        'input[name="provider"][value="' + DEFAULTS.provider + '"]'
+      );
+      if (providerRadio) setAndNotify(providerRadio, true);
+
+      setAndNotify(shortcutInput, DEFAULTS.shortcut);
+
+      var pauseEl = document.querySelector('[data-pref-key="pause"]');
+      var titleEl = document.querySelector('[data-pref-key="include_title"]');
+      var ctxEl   = document.getElementById("context-lines-input");
+      if (pauseEl) setAndNotify(pauseEl, DEFAULTS.pause);
+      if (titleEl) setAndNotify(titleEl, DEFAULTS.include_title);
+      if (ctxEl)   setAndNotify(ctxEl,   DEFAULTS.context_lines);
+
+      resetPrompt();
+    }
+
+    function resetPrompt() {
+      promptInput.value = DEFAULT_PROMPT;
+      promptInput.dispatchEvent(new Event("input",  { bubbles: true }));
+      promptInput.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  </script>
+
+</body>
+</html>

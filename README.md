@@ -17,14 +17,6 @@ An [IINA](https://iina.io) plugin that turns any subtitle line into an instant v
 
 ---
 
-## 🙋 Why I made this
-
-I'm Egyptian and I've been learning English through movies for a couple of years — legal dramas, thrillers, crime films. I can follow most of it. But then a character says something fast in slang and I'm suddenly lost. Pausing to look it up kills the whole mood.
-
-I wanted something instant. One key. Get the word explained in *easy* English, with the original line still there, and a couple of simpler synonyms I can remember before I hit space again.
-
-Nothing like that existed for IINA, so I built it.
-
 ## ✨ What it does
 
 1. You're watching a movie in IINA with English subtitles

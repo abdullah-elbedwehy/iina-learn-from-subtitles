@@ -1,6 +1,7 @@
 node_modules/
 .parcel-cache/
 .claude/
+.superpowers/
 *.log
 .DS_Store
 .vscode/

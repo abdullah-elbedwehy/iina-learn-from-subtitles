@@ -60,11 +60,15 @@ Read it, close the tab, hit space, keep watching.
 
 ### The easy way (recommended)
 
-1. Grab the latest `.iinaplgz` from [Releases](https://github.com/abdullah-elbedwehy/iina-learn-from-subtitles/releases)
-2. Double-click it — IINA installs the plugin automatically
-3. Restart IINA
-4. Go to **IINA → Settings → Plugins → Subtitle Lookup** and confirm it's enabled
-5. Open a movie with English subtitles, hit **Shift+T** to verify it works
+1. Go to [**Releases**](https://github.com/abdullah-elbedwehy/iina-learn-from-subtitles/releases)
+2. Under the latest release, expand **Assets** and download **`subtitle-lookup.iinaplgz`**
+3. Double-click the `.iinaplgz` file — IINA installs it automatically
+4. Restart IINA
+5. Open **IINA → Settings → Plugins → Subtitle Lookup** to confirm it's enabled and configure your shortcut
+6. Open any movie with English subtitles and press **Shift+T** to test
+
+> [!NOTE]
+> If double-clicking doesn't work, open IINA manually, go to **Settings → Plugins**, click the **+** button, and select the `.iinaplgz` file.
 
 ### From source
 

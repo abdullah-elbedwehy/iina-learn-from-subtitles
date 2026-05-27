@@ -77,9 +77,11 @@ export const installSteps = {
   release: {
     title: "From a release",
     steps: [
-      "Download the latest .iinaplgz from GitHub Releases.",
-      "Double-click it — IINA installs it automatically.",
-      "Restart IINA and open Settings → Plugins → Subtitle Lookup.",
+      'Click "Open releases" below and go to the latest release.',
+      "Under Assets, download subtitle-lookup.iinaplgz.",
+      "Double-click the file — IINA installs it automatically.",
+      "Restart IINA.",
+      "Open Settings → Plugins → Subtitle Lookup to configure.",
     ],
   },
   source: {

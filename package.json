@@ -6,6 +6,12 @@
   "author": "Abdullah Elbedwehy",
   "scripts": {
     "build": "rm -rf dist .parcel-cache && parcel build .",
+    "pack": "npm run build && rm -rf release/subtitle-lookup.iinaplugin release/subtitle-lookup.iinaplgz && mkdir -p release/subtitle-lookup.iinaplugin && cp Info.json pref.html release/subtitle-lookup.iinaplugin/ && cp -R dist release/subtitle-lookup.iinaplugin/dist && cd release && zip -qry subtitle-lookup.iinaplgz subtitle-lookup.iinaplugin",
+    "site:install": "npm install --prefix site",
+    "site:dev": "npm run dev --prefix site",
+    "site:build": "npm run build --prefix site",
+    "site:test": "npm test --prefix site -- --run",
+    "site:preview": "npm run preview --prefix site",
     "watch": "parcel watch .",
     "test": "vitest run",
     "test:watch": "vitest"

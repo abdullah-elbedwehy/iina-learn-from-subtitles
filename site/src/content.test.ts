@@ -1,23 +1,23 @@
 import { describe, expect, it } from "vitest";
-import { exampleLookup, flowSteps, navLinks, providers } from "./content";
+import { demoPhases, exampleLookup, flowSteps, heroCopy, navLinks, providers } from "./content";
 
 describe("landing page content", () => {
   it("explains the subtitle lookup flow in three steps", () => {
     expect(flowSteps.map((step) => step.title)).toEqual([
-      "Watch with English subtitles",
-      "Press Shift+T",
-      "Read a simple explanation",
+      "Watch with subtitles on",
+      "Hit your shortcut",
+      "Read and resume",
     ]);
   });
 
-  it("keeps the approved malicious prosecution example", () => {
-    expect(exampleLookup.word).toBe("malicious prosecution");
+  it("keeps the malicious prosecution example in plugin output shape", () => {
     expect(exampleLookup.subtitle).toContain("charge of malicious prosecution");
-    expect(exampleLookup.synonyms).toEqual([
-      "false accusation",
-      "wrongful lawsuit",
-      "abuse of the legal system",
-    ]);
+    expect(exampleLookup.hardWords).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ term: "malicious prosecution" }),
+        expect.objectContaining({ term: "charge" }),
+      ]),
+    );
   });
 
   it("includes install and GitHub navigation targets", () => {
@@ -33,12 +33,11 @@ describe("landing page content", () => {
   });
 
   it("lists supported AI providers", () => {
-    expect(providers).toEqual([
-      "Google AI Mode",
-      "Perplexity",
-      "Claude",
-      "ChatGPT",
-      "Grok",
-    ]);
+    expect(providers).toEqual(["Google AI Mode", "Perplexity", "Claude", "ChatGPT", "Grok"]);
+  });
+
+  it("frames the hero around the IINA movie moment", () => {
+    expect(heroCopy.eyebrow).toBe("IINA plugin");
+    expect(demoPhases).toHaveLength(4);
   });
 });

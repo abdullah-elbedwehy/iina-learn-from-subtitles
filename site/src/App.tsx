@@ -1,45 +1,46 @@
 import "./App.css";
-import heroImage from "./assets/hero-subtitle-lookup.png";
-import { exampleLookup, featureNotes, flowSteps, githubUrl, navLinks, providers } from "./content";
+import { HeroDemo } from "./components/HeroDemo";
+import {
+  exampleLookup,
+  featureNotes,
+  flowSteps,
+  githubUrl,
+  heroCopy,
+  installSteps,
+  navLinks,
+  providers,
+  storyCopy,
+} from "./content";
 
-function AnimatedWorkflow() {
+function SettingsMock() {
   return (
-    <div className="workflow" aria-label="Animated preview of the subtitle lookup workflow">
-      <div className="workflow-screen">
-        <div className="workflow-bar">
-          <span />
-          <span />
-          <span />
-        </div>
-        <div className="movie-frame">
-          <div className="scene-light" />
-          <div className="subtitle-bubble">"a charge of malicious prosecution"</div>
-          <div className="pause-pill">Paused</div>
-        </div>
-        <div className="player-controls" aria-hidden="true">
-          <span />
-          <strong>Shift+T</strong>
-          <span />
+    <div className="settings-mock" aria-label="Preview of the IINA plugin settings panel">
+      <div className="settings-row">
+        <p className="settings-label">AI Provider</p>
+        <div className="settings-options">
+          <span className="is-active">Google AI Mode</span>
+          <span>Perplexity</span>
+          <span>Claude</span>
+          <span>ChatGPT</span>
+          <span>Grok</span>
         </div>
       </div>
-
-      <div className="workflow-answer">
-        <div className="answer-spark">*</div>
-        <p className="answer-label">AI vocabulary helper</p>
-        <h3>{exampleLookup.word}</h3>
-        <p>{exampleLookup.context}</p>
-        <div className="answer-tags">
-          {exampleLookup.synonyms.map((synonym) => (
-            <span key={synonym}>{synonym}</span>
-          ))}
-        </div>
+      <div className="settings-row">
+        <p className="settings-label">Keyboard Shortcut</p>
+        <kbd>Shift+T</kbd>
       </div>
-
-      <ol className="workflow-status">
-        <li>1. Subtitle appears</li>
-        <li>2. Shift+T pauses IINA</li>
-        <li>3. AI opens the explanation</li>
-      </ol>
+      <div className="settings-row">
+        <p className="settings-label">Pause video when triggered</p>
+        <span className="settings-toggle is-on">On</span>
+      </div>
+      <div className="settings-row">
+        <p className="settings-label">Recent subtitle lines</p>
+        <span className="settings-value">5</span>
+      </div>
+      <div className="settings-row settings-row-wide">
+        <p className="settings-label">System Prompt</p>
+        <pre>{`Original: "{{subtitle}}"\nSimplified: ...\nHard words:\n- charge: accusation, case`}</pre>
+      </div>
     </div>
   );
 }
@@ -49,8 +50,11 @@ function App() {
     <main>
       <header className="site-nav" aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="Subtitle Lookup home">
-          <span className="brand-mark">S</span>
-          <span>Subtitle Lookup</span>
+          <img className="brand-logo" src="/iina-logo.png" alt="" width={38} height={38} />
+          <span>
+            Subtitle Lookup
+            <small>for IINA</small>
+          </span>
         </a>
         <nav>
           {navLinks.map((link) => (
@@ -62,136 +66,131 @@ function App() {
       </header>
 
       <section className="hero" id="top">
+        <div className="hero-demo-wrap" id="demo">
+          <HeroDemo />
+        </div>
+
         <div className="hero-copy">
-          <p className="eyebrow">IINA plugin for movie English</p>
-          <h1>Learn English from the subtitle on screen.</h1>
-          <p className="hero-lede">
-            Press a shortcut while watching in IINA. The video pauses, your current subtitle becomes context,
-            and your chosen AI opens with a simple vocabulary explanation.
-          </p>
+          <p className="eyebrow">{heroCopy.eyebrow}</p>
+          <h1>{heroCopy.headline}</h1>
+          <p className="hero-lede">{heroCopy.lede}</p>
           <div className="hero-actions">
-            <a className="button primary" href="#install">
-              Install from releases
+            <a className="button primary" href={`${githubUrl}/releases`}>
+              Get the plugin
             </a>
             <a className="button secondary" href={githubUrl}>
               View on GitHub
             </a>
           </div>
-          <div className="hero-proof">
-            <span>No plugin server</span>
-            <span>Editable prompt</span>
-            <span>Provider choice</span>
-          </div>
-        </div>
-
-        <div className="mobile-first-flow" aria-label="Quick workflow preview">
-          <AnimatedWorkflow />
-        </div>
-
-        <div className="hero-media" aria-label="Generated product visual of subtitle lookup in IINA">
-          <img src={heroImage} alt="A macOS-style media player with a subtitle lookup assistant panel" />
-        </div>
-      </section>
-
-      <section className="section intro-section" id="how-it-works">
-        <div className="section-heading">
-          <p className="eyebrow">How it works</p>
-          <h2>One shortcut, one clear explanation.</h2>
-        </div>
-        <div className="steps-grid">
-          {flowSteps.map((step, index) => (
-            <article className="step" key={step.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{step.title}</h3>
-              <p>{step.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section experience-section">
-        <div className="experience-copy">
-          <p className="eyebrow">The extension idea</p>
-          <h2>It keeps the learning moment attached to the movie.</h2>
-          <p>
-            Instead of switching apps, guessing the word, or losing the scene, the plugin sends the subtitle line
-            as context. The answer can focus on meaning, tone, example usage, and synonyms.
-          </p>
-        </div>
-        <AnimatedWorkflow />
-      </section>
-
-      <section className="section example-section" id="example">
-        <div className="example-card">
-          <div>
-            <p className="eyebrow">Real lookup shape</p>
-            <h2>From a hard phrase to a useful meaning.</h2>
-          </div>
-          <blockquote>"{exampleLookup.subtitle}"</blockquote>
-          <dl>
-            <div>
-              <dt>In context</dt>
-              <dd>{exampleLookup.context}</dd>
-            </div>
-            <div>
-              <dt>Word</dt>
-              <dd>{exampleLookup.word}</dd>
-            </div>
-            <div>
-              <dt>Synonyms</dt>
-              <dd>{exampleLookup.synonyms.join(", ")}</dd>
-            </div>
-          </dl>
-        </div>
-      </section>
-
-      <section className="section features-section" aria-label="Plugin features">
-        <div className="feature-copy">
-          <p className="eyebrow">Small plugin, useful controls</p>
-          <h2>Choose the AI and tune the prompt.</h2>
-          <p>
-            Keep it simple, or customize the system prompt for Arabic explanations, shorter answers, slang notes,
-            or a specific study format.
-          </p>
-        </div>
-        <div className="feature-panel">
-          <div className="provider-list">
-            {providers.map((provider) => (
-              <span key={provider}>{provider}</span>
-            ))}
-          </div>
-          <ul>
-            {featureNotes.map((note) => (
+          <ul className="hero-trust">
+            {featureNotes.slice(0, 3).map((note) => (
               <li key={note}>{note}</li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="section install-section" id="install">
-        <div>
-          <p className="eyebrow">Install</p>
-          <h2>Try it in IINA.</h2>
+      <section className="section story-section">
+        <div className="story-copy">
+          <p className="eyebrow">{storyCopy.eyebrow}</p>
+          <h2>{storyCopy.headline}</h2>
+          <p>{storyCopy.body}</p>
+        </div>
+        <ol className="flow-list">
+          {flowSteps.map((step, index) => (
+            <li key={step.title}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="section output-section" id="output">
+        <div className="output-copy">
+          <p className="eyebrow">What you get back</p>
+          <h2>The plugin asks the AI for this exact shape.</h2>
           <p>
-            Use a packaged release when it is available, or build from source and place the plugin folder in IINA's
-            plugins directory.
+            Not a chat thread. Not a dictionary dump. A short rewrite of the line, then the hard words with simpler
+            synonyms you can remember before you hit space again.
           </p>
         </div>
-        <div className="install-panel">
-          <a className="button primary" href={`${githubUrl}/releases`}>
-            Get the latest release
-          </a>
-          <pre>
-            <code>{`npm install
-npm run build`}</code>
-          </pre>
-          <p>Then place the folder in IINA's plugin directory and restart IINA.</p>
+        <article className="output-panel" aria-label="Example lookup output">
+          <p>
+            <strong>Original</strong>
+            <span>"{exampleLookup.subtitle}"</span>
+          </p>
+          <p>
+            <strong>Simplified</strong>
+            <span>{exampleLookup.simplified}</span>
+          </p>
+          <div>
+            <strong>Hard words</strong>
+            <ul>
+              {exampleLookup.hardWords.map((entry) => (
+                <li key={entry.term}>
+                  <em>{entry.term}</em>: {entry.synonyms}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section className="section settings-section">
+        <div className="settings-copy">
+          <p className="eyebrow">Inside IINA</p>
+          <h2>Pick the AI, tune the prompt, set your shortcut.</h2>
+          <p>
+            Everything lives in IINA → Settings → Plugins → Subtitle Lookup. No accounts wired into the plugin. It
+            just opens a URL with your query.
+          </p>
+          <div className="provider-strip">
+            {providers.map((provider) => (
+              <span key={provider}>{provider}</span>
+            ))}
+          </div>
         </div>
-        <div className="demo-note">
-          <strong>Demo video coming soon</strong>
-          <span>You can add your short walkthrough here later without redesigning the page.</span>
+        <SettingsMock />
+      </section>
+
+      <section className="section install-section" id="install">
+        <div className="install-copy">
+          <p className="eyebrow">Install</p>
+          <h2>Requires IINA 1.4+ on macOS.</h2>
+          <p>Use a packaged release when you can. Build from source if you prefer.</p>
+        </div>
+
+        <div className="install-grid">
+          <article>
+            <h3>{installSteps.release.title}</h3>
+            <ol>
+              {installSteps.release.steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+            <a className="button primary" href={`${githubUrl}/releases`}>
+              Open releases
+            </a>
+          </article>
+
+          <article>
+            <h3>{installSteps.source.title}</h3>
+            <pre>
+              <code>{installSteps.source.commands}</code>
+            </pre>
+            <p>{installSteps.source.note}</p>
+          </article>
         </div>
       </section>
+
+      <footer className="site-footer">
+        <p>Built by Abdullah Elbedwehy for movie English learners.</p>
+        <a href={githubUrl}>Star it on GitHub</a>
+      </footer>
     </main>
   );
 }

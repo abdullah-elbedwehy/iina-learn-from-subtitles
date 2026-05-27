@@ -1,6 +1,8 @@
 :root {
   color-scheme: dark;
-  font-family: "Karla", ui-sans-serif, sans-serif;
+  font-family: "Lexend", ui-sans-serif, sans-serif;
+  --font-display: "Figtree", "Lexend", ui-sans-serif, sans-serif;
+  --font-body: "Lexend", ui-sans-serif, sans-serif;
   color: oklch(95% 0.01 260);
   background: oklch(18% 0.012 270);
   font-synthesis: none;
@@ -21,6 +23,8 @@
   --accent-gradient: linear-gradient(135deg, var(--iina-purple) 0%, var(--iina-blue) 52%, var(--iina-cyan) 100%);
   --shadow: 0 24px 70px oklch(8% 0.02 270 / 0.55);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --page-gutter: max(20px, env(safe-area-inset-left, 0px));
+  --page-gutter-end: max(20px, env(safe-area-inset-right, 0px));
 }
 
 * {
@@ -47,53 +51,60 @@ a {
 }
 
 main {
-  overflow: hidden;
+  overflow-x: clip;
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.site-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  width: 100%;
+  background: oklch(18% 0.012 270 / 0.88);
+  backdrop-filter: blur(14px);
+  padding-top: env(safe-area-inset-top, 0);
 }
 
 .site-nav {
-  width: min(1180px, calc(100% - 40px));
+  width: min(1180px, calc(100% - var(--page-gutter) - var(--page-gutter-end)));
   min-height: 72px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 16px;
 }
 
 .brand {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  gap: 12px;
-  font-family: "Young Serif", Georgia, serif;
-  font-size: 1.08rem;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .brand small {
   display: block;
   color: var(--muted);
-  font-family: "Karla", sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.brand-logo {
-  display: block;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  box-shadow: 0 10px 28px oklch(58% 0.2 259 / 0.28);
-}
-
-.site-nav nav {
+.site-nav-links {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.site-nav nav a {
+.site-nav-links a {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -105,16 +116,16 @@ main {
   transition: background 180ms var(--ease-out), color 180ms var(--ease-out);
 }
 
-.site-nav nav a:hover {
+.site-nav-links a:hover {
   background: oklch(28% 0.02 270 / 0.82);
   color: var(--ink);
 }
 
 .hero {
-  width: min(1180px, calc(100% - 40px));
+  width: min(1180px, calc(100% - var(--page-gutter) - var(--page-gutter-end)));
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1.18fr);
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
   align-items: start;
   gap: clamp(28px, 5vw, 64px);
   padding: 16px 0 56px;
@@ -135,6 +146,7 @@ main {
 
 .eyebrow {
   margin: 0 0 14px;
+  font-family: var(--font-display);
   color: var(--accent-bright);
   font-size: 0.76rem;
   font-weight: 800;
@@ -151,23 +163,24 @@ p {
 
 h1,
 h2 {
-  font-family: "Young Serif", Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
 h1 {
-  max-width: 16ch;
+  max-width: 11.5em;
   margin-bottom: 20px;
-  font-size: clamp(2.35rem, 3.8vw, 3.45rem);
-  line-height: 1.04;
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  line-height: 1.08;
 }
 
 h2 {
-  max-width: 14ch;
+  max-width: 13em;
   margin-bottom: 16px;
-  font-size: clamp(2rem, 3.4vw, 3.2rem);
-  line-height: 1.02;
+  font-size: clamp(1.95rem, 3.2vw, 2.85rem);
+  line-height: 1.1;
 }
 
 h3 {
@@ -247,20 +260,25 @@ h3 {
 }
 
 .section {
-  width: min(1180px, calc(100% - 40px));
+  width: min(1180px, calc(100% - var(--page-gutter) - var(--page-gutter-end)));
   margin: 0 auto;
   padding: clamp(64px, 9vw, 112px) 0;
 }
 
 .story-section {
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(360px, 1.22fr);
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
   gap: clamp(28px, 6vw, 72px);
   align-items: start;
 }
 
 .story-copy p:last-child {
   max-width: 52ch;
+}
+
+.story-media {
+  display: grid;
+  gap: 22px;
 }
 
 .flow-list {
@@ -281,8 +299,10 @@ h3 {
 
 .flow-list li span {
   color: var(--accent-bright);
-  font-family: "Young Serif", Georgia, serif;
-  font-size: 1.8rem;
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
@@ -294,7 +314,7 @@ h3 {
 .settings-section,
 .install-section {
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(380px, 1.22fr);
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
   gap: clamp(28px, 5vw, 68px);
   align-items: start;
 }
@@ -432,6 +452,13 @@ h3 {
   font-size: 0.82rem;
 }
 
+.settings-row-wide pre,
+.install-grid pre,
+.output-panel {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .settings-row-wide pre {
   margin: 0;
   padding: 12px;
@@ -475,9 +502,9 @@ h3 {
 }
 
 .site-footer {
-  width: min(1180px, calc(100% - 40px));
+  width: min(1180px, calc(100% - var(--page-gutter) - var(--page-gutter-end)));
   margin: 0 auto;
-  padding: 28px 0 48px;
+  padding: 28px 0 max(48px, env(safe-area-inset-bottom, 0px));
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -499,63 +526,6 @@ h3 {
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
-  }
-}
-
-@media (max-width: 860px) {
-  .site-nav {
-    width: min(100% - 24px, 680px);
-  }
-
-  .site-nav nav {
-    display: none;
-  }
-
-  .hero,
-  .story-section,
-  .output-section,
-  .settings-section,
-  .install-section {
-    width: min(100% - 24px, 680px);
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    padding-top: 12px;
-    padding-bottom: 40px;
-  }
-
-  .hero-demo-wrap {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .hero-copy {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: start;
-  }
-
-  h1 {
-    max-width: none;
-  }
-
-  .hero-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .button {
-    width: 100%;
-  }
-
-  .install-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .site-footer {
-    width: min(100% - 24px, 680px);
-    flex-direction: column;
   }
 }
 

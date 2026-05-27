@@ -1,6 +1,10 @@
 import "./App.css";
+import "./mobile.css";
+import { DemoVideoPlayer } from "./components/DemoVideoPlayer";
 import { HeroDemo } from "./components/HeroDemo";
+import { MobileNav } from "./components/MobileNav";
 import {
+  demoVideo,
   exampleLookup,
   featureNotes,
   flowSteps,
@@ -39,7 +43,7 @@ function SettingsMock() {
       </div>
       <div className="settings-row settings-row-wide">
         <p className="settings-label">System Prompt</p>
-        <pre>{`Original: "{{subtitle}}"\nSimplified: ...\nHard words:\n- charge: accusation, case`}</pre>
+        <pre>{`Original: "{{subtitle}}"\nSimplified: ...\nHard words:\n- churned: mixed hard, beat\n- crawled out: climbed out`}</pre>
       </div>
     </div>
   );
@@ -48,22 +52,24 @@ function SettingsMock() {
 function App() {
   return (
     <main>
-      <header className="site-nav" aria-label="Main navigation">
-        <a className="brand" href="#top" aria-label="Subtitle Lookup home">
-          <img className="brand-logo" src="/iina-logo.png" alt="" width={38} height={38} />
-          <span>
-            Subtitle Lookup
-            <small>for IINA</small>
-          </span>
-        </a>
-        <nav>
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href}>
-              {link.label}
-            </a>
-          ))}
-        </nav>
-      </header>
+      <div className="site-nav-wrap">
+        <header className="site-nav" aria-label="Main navigation">
+          <a className="brand" href="#top" aria-label="Subtitle Lookup home">
+            <span>
+              Subtitle Lookup
+              <small>for IINA</small>
+            </span>
+          </a>
+          <nav className="site-nav-links" aria-label="Site sections">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <MobileNav />
+        </header>
+      </div>
 
       <section className="hero" id="top">
         <div className="hero-demo-wrap" id="demo">
@@ -83,39 +89,42 @@ function App() {
             </a>
           </div>
           <ul className="hero-trust">
-            {featureNotes.slice(0, 3).map((note) => (
+            {featureNotes.map((note) => (
               <li key={note}>{note}</li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="section story-section">
+      <section className="section story-section" id="watch">
         <div className="story-copy">
           <p className="eyebrow">{storyCopy.eyebrow}</p>
           <h2>{storyCopy.headline}</h2>
           <p>{storyCopy.body}</p>
         </div>
-        <ol className="flow-list">
-          {flowSteps.map((step, index) => (
-            <li key={step.title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <div>
-                <h3>{step.title}</h3>
-                <p>{step.description}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div className="story-media">
+          <DemoVideoPlayer src={demoVideo.src} title={demoVideo.title} caption={demoVideo.caption} />
+          <ol className="flow-list">
+            {flowSteps.map((step, index) => (
+              <li key={step.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </section>
 
       <section className="section output-section" id="output">
         <div className="output-copy">
           <p className="eyebrow">What you get back</p>
-          <h2>The plugin asks the AI for this exact shape.</h2>
+          <h2>Same format every time. No surprises.</h2>
           <p>
-            Not a chat thread. Not a dictionary dump. A short rewrite of the line, then the hard words with simpler
-            synonyms you can remember before you hit space again.
+            Not a chat thread, not a wall of text. The AI rewrites the line in plain English, then lists the hard words
+            with simple synonyms — short enough to read before you press space.
           </p>
         </div>
         <article className="output-panel" aria-label="Example lookup output">
@@ -145,8 +154,8 @@ function App() {
           <p className="eyebrow">Inside IINA</p>
           <h2>Pick the AI, tune the prompt, set your shortcut.</h2>
           <p>
-            Everything lives in IINA → Settings → Plugins → Subtitle Lookup. No accounts wired into the plugin. It
-            just opens a URL with your query.
+            Everything lives in IINA → Settings → Plugins → Subtitle Lookup. No accounts, no API keys, nothing going
+            through a server I control. The plugin just builds a URL and opens it.
           </p>
           <div className="provider-strip">
             {providers.map((provider) => (
@@ -161,7 +170,7 @@ function App() {
         <div className="install-copy">
           <p className="eyebrow">Install</p>
           <h2>Requires IINA 1.4+ on macOS.</h2>
-          <p>Use a packaged release when you can. Build from source if you prefer.</p>
+          <p>Grab the release if you just want it working. Clone and build if you're curious how it's put together.</p>
         </div>
 
         <div className="install-grid">
@@ -188,9 +197,15 @@ function App() {
       </section>
 
       <footer className="site-footer">
-        <p>Built by Abdullah Elbedwehy for movie English learners.</p>
-        <a href={githubUrl}>Star it on GitHub</a>
+        <p>Made by <a href={githubUrl}>Abdullah Elbedwehy</a> — an Egyptian learning English through movies.</p>
+        <a href={`${githubUrl}/releases`}>Download on GitHub</a>
       </footer>
+
+      <div className="mobile-install-bar">
+        <a className="button primary" href={`${githubUrl}/releases`}>
+          Get the plugin
+        </a>
+      </div>
     </main>
   );
 }

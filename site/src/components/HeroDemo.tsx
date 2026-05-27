@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { demoPhases, exampleLookup } from "../content";
 import "./HeroDemo.css";
 
 const TIMELINE = [
-  { id: "watch", duration: 2000 },
-  { id: "trigger", duration: 1400 },
-  { id: "lookup", duration: 4500 },
-  { id: "resume", duration: 2300 },
+  { id: "watch", duration: 2400 },
+  { id: "trigger", duration: 1800 },
+  { id: "lookup", duration: 5000 },
+  { id: "resume", duration: 2600 },
 ] as const;
 
 function useDemoPhase() {
@@ -38,15 +38,18 @@ export function HeroDemo() {
     <div
       className="hero-demo"
       data-phase={phase.id}
+      style={{ "--phase-duration": `${phase.duration}ms` } as CSSProperties}
       aria-label="Animated demo of Subtitle Lookup inside IINA"
     >
       <div className="hero-demo-stage" aria-hidden="true">
+        <span key={phase.id} className="hero-demo-phase-bar" aria-hidden="true" />
+
         <div className="iina-window">
           <div className="iina-titlebar">
             <span className="iina-dot" />
             <span className="iina-dot" />
             <span className="iina-dot" />
-            <span className="iina-title">IINA · Legal drama rip</span>
+            <span className="iina-title">Catch Me If You Can</span>
             <span className="iina-playing">Playing</span>
           </div>
 

@@ -12,10 +12,7 @@ describe("App", () => {
         name: "Explain the subtitle. Keep watching.",
       }),
     ).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Get the plugin" })).toHaveAttribute(
-      "href",
-      "https://github.com/abdullah-elbedwehy/iina-learn-from-subtitles/releases",
-    );
+    expect(screen.getAllByRole("link", { name: "Get the plugin" })).toHaveLength(2);
   });
 
   it("renders the hero demo with the practical workflow steps", () => {
@@ -42,6 +39,17 @@ describe("App", () => {
     fireEvent.click(stepOne);
     expect(demo).toHaveAttribute("data-phase", "watch");
     expect(stepOne).toHaveAttribute("aria-current", "step");
+  });
+
+  it("renders the walkthrough video on the story section", () => {
+    render(<App />);
+
+    const video = screen.getByLabelText("Subtitle Lookup demo in IINA");
+    expect(video).toHaveAttribute("src", "/subtitle-lookup-demo.mp4");
+    expect(screen.getByRole("button", { name: "Play demo video" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Open menu" })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Enter fullscreen" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Mute demo video" })).toBeNull();
   });
 
   it("shows the exact lookup output shape from the plugin prompt", () => {

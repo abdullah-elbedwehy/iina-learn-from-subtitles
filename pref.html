@@ -67,6 +67,10 @@
       border: 1px solid GrayText;
       border-radius: 4px;
     }
+    #prompt-input {
+      overflow-y: scroll;
+      overscroll-behavior: contain;
+    }
     button {
       margin-top: 6px;
       font-size: 11px;
@@ -219,6 +223,25 @@
 
     var shortcutInput = document.getElementById("shortcut-input");
     var promptInput   = document.getElementById("prompt-input");
+
+    function handlePromptWheel(e) {
+      if (promptInput.scrollHeight <= promptInput.clientHeight) return;
+
+      var scrollDelta = e.deltaY;
+      if (e.deltaMode === 1) scrollDelta *= 16;
+      if (e.deltaMode === 2) scrollDelta *= promptInput.clientHeight;
+      if (scrollDelta === 0) return;
+
+      var beforeScrollTop = promptInput.scrollTop;
+      promptInput.scrollTop += scrollDelta;
+
+      if (promptInput.scrollTop !== beforeScrollTop) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }
+
+    promptInput.addEventListener("wheel", handlePromptWheel, { passive: false });
 
     // Pre-fill prompt on load if empty (first install).
     window.addEventListener("load", function () {

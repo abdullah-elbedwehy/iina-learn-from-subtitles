@@ -2,6 +2,7 @@ export const githubUrl = "https://github.com/abdullah-elbedwehy/iina-learn-from-
 
 export const navLinks = [
   { label: "Demo", href: "#demo" },
+  { label: "How it works", href: "#watch" },
   { label: "Output", href: "#output" },
   { label: "Install", href: "#install" },
   { label: "GitHub", href: githubUrl },
@@ -11,14 +12,20 @@ export const heroCopy = {
   eyebrow: "IINA plugin",
   headline: "Explain the subtitle. Keep watching.",
   lede:
-    "Subtitle Lookup reads whatever English subtitle is on screen in IINA, pauses playback, and opens your chosen AI with the line already in context. No copy-paste. No tab juggling.",
+    "Press one key when something on screen stops you. The plugin grabs the subtitle, opens your AI with the line already there, and optionally pauses so you actually have time to read the answer. No copy-paste, no switching apps manually.",
 } as const;
 
 export const storyCopy = {
-  eyebrow: "Why it exists",
-  headline: "Built for the moment a phrase kills the mood.",
+  eyebrow: "Why I built this",
+  headline: "Built for the moment a phrase stops you cold.",
   body:
-    "I learn English through movies. It works until someone drops a line like malicious prosecution and I lose five minutes to Wikipedia. I wanted the word explained in easy English, with the original phrase still there, then spacebar and keep watching.",
+    "I learn English through movies. It works most of the time — until a character says something like malicious prosecution and suddenly I'm five minutes deep into Wikipedia and I've lost the whole scene. I wanted a tool that explains the line in plain English, shows the original next to it, and then gets out of the way so I can press space and keep going. Nothing like that existed for IINA, so I made it.",
+} as const;
+
+export const demoVideo = {
+  src: "/subtitle-lookup-demo.mp4",
+  title: "Subtitle Lookup demo in IINA",
+  caption: "A real Shift+T lookup from a movie subtitle — watch what the plugin actually does.",
 } as const;
 
 export const demoPhases = [
@@ -29,38 +36,37 @@ export const demoPhases = [
 ] as const;
 
 export const exampleLookup = {
-  subtitle: "you're going to be faced with a charge of malicious prosecution.",
+  subtitle: "He struggled so hard that eventually he churned that cream into butter and crawled out.",
   simplified:
-    "Someone is going to accuse you of starting a fake court case against another person on purpose to hurt them.",
+    "He kept trying with all his strength until, after a long time, his movements turned the liquid into something solid — and that's how he escaped.",
   hardWords: [
-    { term: "charge", synonyms: "accusation, formal complaint, case" },
-    {
-      term: "malicious prosecution",
-      synonyms: "wrongful lawsuit, false legal case, abuse of court",
-    },
+    { term: "struggled", synonyms: "fought hard, pushed himself, kept trying" },
+    { term: "eventually", synonyms: "finally, in the end, after a long time" },
+    { term: "churned", synonyms: "mixed hard, beat, stirred fast" },
+    { term: "crawled out", synonyms: "climbed out slowly, pulled himself out" },
   ],
 } as const;
 
 export const flowSteps = [
   {
     title: "Watch with subtitles on",
-    description: "Open any movie in IINA. The lookup uses whatever subtitle line is visible when you press the shortcut.",
+    description: "Open any video in IINA. The plugin works with whatever subtitle file IINA is already showing — .srt, .ass, anything.",
   },
   {
     title: "Hit your shortcut",
-    description: "Default is Shift+T. The plugin can pause the video and grab the current line plus recent scene context.",
+    description: "Default is Shift+T. The plugin grabs the current line, optionally pauses, and sends it to your chosen AI with the recent scene as context.",
   },
   {
-    title: "Read and resume",
-    description: "Your browser opens to Google AI Mode, Perplexity, Claude, ChatGPT, or Grok. Close the tab and keep watching.",
+    title: "Read it and get back",
+    description: "Your browser opens with the explanation ready. Read it, close the tab, press space — you're back in the movie.",
   },
 ] as const;
 
 export const providers = ["Google AI Mode", "Perplexity", "Claude", "ChatGPT", "Grok"] as const;
 
 export const featureNotes = [
-  "No API keys in the plugin",
-  "No plugin server",
+  "No API keys required",
+  "No server in the middle",
   "Editable system prompt",
   "Custom keyboard shortcut",
   "Optional pause on lookup",
@@ -72,7 +78,7 @@ export const installSteps = {
     title: "From a release",
     steps: [
       "Download the latest .iinaplgz from GitHub Releases.",
-      "Double-click it. IINA installs the plugin.",
+      "Double-click it — IINA installs it automatically.",
       "Restart IINA and open Settings → Plugins → Subtitle Lookup.",
     ],
   },

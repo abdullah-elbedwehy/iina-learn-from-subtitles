@@ -1,0 +1,111 @@
+.mobile-nav-toggle {
+  display: none;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: oklch(22% 0.014 270 / 0.92);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.mobile-nav-toggle-icon {
+  display: grid;
+  gap: 5px;
+  width: 18px;
+}
+
+.mobile-nav-toggle-icon span {
+  display: block;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.mobile-nav-backdrop {
+  display: none;
+}
+
+.mobile-nav-sheet {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .mobile-nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: oklch(8% 0.02 270 / 0.62);
+    cursor: pointer;
+  }
+
+  .mobile-nav-backdrop[hidden],
+  .mobile-nav-sheet[hidden] {
+    display: none;
+  }
+
+  .mobile-nav-sheet {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 50;
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    width: min(320px, 100vw);
+    height: 100dvh;
+    margin: 0;
+    padding:
+      calc(18px + env(safe-area-inset-top, 0px))
+      max(18px, env(safe-area-inset-right, 0px))
+      max(24px, env(safe-area-inset-bottom, 0px))
+      24px;
+    border: 0;
+    border-left: 1px solid var(--line);
+    background: oklch(17% 0.012 270 / 0.98);
+    box-shadow: -24px 0 60px oklch(8% 0.02 270 / 0.45);
+  }
+
+  .mobile-nav-sheet-label {
+    margin: 0 0 10px;
+    padding: 0 12px;
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mobile-nav-sheet a {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    border-radius: 14px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    font-weight: 650;
+  }
+
+  .mobile-nav-sheet a:focus-visible,
+  .mobile-nav-sheet a:active {
+    background: oklch(28% 0.02 270 / 0.82);
+  }
+
+  body.mobile-nav-open {
+    overflow: hidden;
+  }
+}

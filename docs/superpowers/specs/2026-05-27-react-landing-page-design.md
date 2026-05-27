@@ -94,7 +94,7 @@ Expected files:
 - `site/src/main.tsx`
 - `site/src/App.tsx`
 - `site/src/App.css`
-- `site/src/assets/hero-subtitle-lookup.webp`
+- `site/src/assets/hero-subtitle-lookup.png`
 
 Keep the existing plugin package untouched except for documentation links if needed.
 

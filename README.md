@@ -19,31 +19,33 @@ An [IINA](https://iina.io) plugin that turns any subtitle line into an instant v
 
 ## 🙋 Why I made this
 
-I learn English through movies. It works — until a character drops a phrase like *"a charge of malicious prosecution"* and I'm stuck. Pausing, opening a tab, typing the word, reading three Wikipedia pages, coming back. Five minutes later the mood is gone.
+I'm Egyptian and I've been learning English through movies for a couple of years — legal dramas, thrillers, crime films. I can follow most of it. But then a character says something fast in slang and I'm suddenly lost. Pausing to look it up kills the whole mood.
 
-I wanted something instant. One shortcut. Get the word explained in *easy* English, with the original phrase still there next to it, and a couple of simpler synonyms I can remember. Then back to the movie.
+I wanted something instant. One key. Get the word explained in *easy* English, with the original line still there, and a couple of simpler synonyms I can remember before I hit space again.
 
-That's what this plugin does.
+Nothing like that existed for IINA, so I built it.
 
 ## ✨ What it does
 
 1. You're watching a movie in IINA with English subtitles
-2. A word stumps you
+2. A word or phrase stumps you
 3. You hit **Shift+T** (or whatever you set)
 4. The video pauses, your browser opens, and the AI gives you back:
 
 ```
-Original: "you're going to be faced with a charge of malicious prosecution."
+Original: "He struggled so hard that eventually he churned that cream into butter and crawled out."
 
-Simplified: Someone is going to accuse you of starting a fake court
-case against another person on purpose to hurt them.
+Simplified: He kept trying with all his strength until, after a long time, his movements
+turned the liquid into something solid — and that's how he escaped.
 
 Hard words:
-- charge: accusation, formal complaint, case
-- malicious prosecution: wrongful lawsuit, false legal case, abuse of court
+- struggled: fought hard, pushed himself, kept trying
+- eventually: finally, in the end, after a long time
+- churned: mixed hard, beat, stirred fast
+- crawled out: climbed out slowly, pulled himself out
 ```
 
-That's it. Read it, close the tab, hit space, keep watching.
+Read it, close the tab, hit space, keep watching.
 
 ## 📸 What it looks like
 
@@ -56,11 +58,13 @@ That's it. Read it, close the tab, hit space, keep watching.
 > [!NOTE]
 > Requires **IINA 1.4+** on macOS.
 
-### The easy way
+### The easy way (recommended)
 
 1. Grab the latest `.iinaplgz` from [Releases](https://github.com/abdullah-elbedwehy/iina-learn-from-subtitles/releases)
-2. Double-click it. IINA installs it for you.
-3. Restart IINA.
+2. Double-click it — IINA installs the plugin automatically
+3. Restart IINA
+4. Go to **IINA → Settings → Plugins → Subtitle Lookup** and confirm it's enabled
+5. Open a movie with English subtitles, hit **Shift+T** to verify it works
 
 ### From source
 
@@ -71,7 +75,16 @@ npm install
 npm run build
 ```
 
-Then drop the whole folder into `~/Library/Application Support/com.colliderli.iina/plugins/` and rename it to end with `.iinaplugin`.
+Then copy the folder to the IINA plugins directory:
+
+```bash
+cp -R . ~/Library/Application\ Support/com.colliderli.iina/plugins/subtitle-lookup.iinaplugin
+```
+
+Restart IINA. The plugin should appear under Settings → Plugins.
+
+> [!TIP]
+> Run `npm run watch` during development — Parcel rebuilds `dist/index.js` on every save. Just reload the plugin in IINA (Settings → Plugins → Subtitle Lookup → ↺) without restarting.
 
 ## 🎯 How to use
 
@@ -81,6 +94,22 @@ Then drop the whole folder into `~/Library/Application Support/com.colliderli.ii
 4. Hit **space** in IINA to keep watching.
 
 The current subtitle is what gets looked up — whatever's visible on screen at the moment you press the shortcut.
+
+## 🔍 How it works
+
+No API key, no server, no account. Here's the full chain:
+
+1. **Subtitle observer** — `src/index.ts` listens to `mpv.sub-text.changed` via IINA's event system. Every time the subtitle line changes, it's pushed into a rolling buffer (`src/history.ts`).
+
+2. **Shortcut triggers lookup** — when you press Shift+T, `performLookup()` in `src/lookup.ts` runs. It reads the current subtitle from mpv, grabs the last N lines from the buffer, and optionally pauses playback.
+
+3. **Template substitution** — `src/template.ts` replaces `{{subtitle}}`, `{{recent_subtitles}}`, `{{title}}`, etc. in your system prompt with real values. The full prompt becomes the query string.
+
+4. **Opens a URL** — the prompt is `encodeURIComponent`-encoded and appended to your chosen provider's URL (e.g. `https://www.google.com/search?udm=50&q=`). IINA calls `utils.open()` to open it in your default browser.
+
+5. **AI replies in the browser** — the AI sees your prompt and subtitle, responds in the structured format. No data goes through any server I control.
+
+The structured output format (Original → Simplified → Hard words) is enforced by the system prompt, not the plugin code. You can rewrite it entirely from Settings.
 
 ## ⚙️ Settings
 

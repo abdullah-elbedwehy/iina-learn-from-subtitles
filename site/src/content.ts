@@ -19,7 +19,7 @@ export const storyCopy = {
   eyebrow: "Why I built this",
   headline: "Built for the moment a phrase stops you cold.",
   body:
-    "I learn English through movies. It works most of the time — until a character says something like malicious prosecution and suddenly I'm five minutes deep into Wikipedia and I've lost the whole scene. I wanted a tool that explains the line in plain English, shows the original next to it, and then gets out of the way so I can press space and keep going. Nothing like that existed for IINA, so I made it.",
+    "I'm Egyptian and I've been learning English through movies for the past couple of years — legal dramas, thrillers, crime films. I can follow most of it. But then a character drops some slang or a fast one-liner and I'm suddenly lost. Pausing to look it up kills the whole mood. I wanted something that shows me the explanation right there, keeps the original line visible next to it, then gets out of the way. Nothing like that existed for IINA, so I built it myself.",
 } as const;
 
 export const demoVideo = {

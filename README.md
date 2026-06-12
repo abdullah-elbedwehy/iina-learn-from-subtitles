@@ -11,6 +11,9 @@ An [IINA](https://iina.io) plugin that turns any subtitle line into an instant v
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tests](https://img.shields.io/badge/tests-39%20passing-brightgreen)](./tests)
 
+
+site : https://iina-learn-from-subtitles.vercel.app/
+
 <img src="docs/screenshots/settings.png" alt="Subtitle Lookup settings panel" width="520" />
 
 </div>
